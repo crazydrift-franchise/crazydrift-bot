@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CrazyDrift — Стратегия 2026–2027 по методике «Пять единичек» Гребенюка</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #0b1829;
+    --blue:    #173554;
+    --mid:     #1d5087;
+    --accent:  #e8501a;
+    --gold:    #f5a623;
+    --green:   #1e8a4a;
+    --red:     #c0392b;
+    --purple:  #6c3483;
+    --teal:    #117a65;
+    --light:   #f2f5f9;
+    --white:   #ffffff;
+    --text:    #1a2535;
+    --muted:   #64748b;
+    --border:  #dde5f0;
+    --e1: #e8501a;
+    --e2: #f5a623;
+    --e3: #1d5087;
+    --e4: #1e8a4a;
+    --e5: #6c3483;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text);
+    background: #dde3ec;
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+
+  /* ── PAGE ─────────────────────────────────── */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: var(--white);
+    margin: 10mm auto;
+    padding: 16mm 20mm 20mm;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 40px rgba(0,0,0,.2);
+    page-break-after: always;
+  }
+
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; page-break-after: always; }
+    @page { size: A4; margin: 0; }
+  }
+
+  /* ── COVER ────────────────────────────────── */
+  .cover {
+    background: var(--navy);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 297mm;
+  }
+
+  .cover-stripe {
+    height: 6px;
+    background: linear-gradient(90deg, var(--e1) 0%, var(--e2) 25%, var(--e3) 50%, var(--e4) 75%, var(--e5) 100%);
+  }
+
+  .cover-body {
+    flex: 1;
+    padding: 20mm 22mm 14mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .cover-eyebrow {
+    font-size: 10.5px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .cover-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .cover h1 {
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: white;
+    letter-spacing: -1.5px;
+    margin-bottom: 10px;
+  }
+
+  .cover h1 em { color: var(--accent); font-style: normal; }
+
+  .cover-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,.6);
+    max-width: 440px;
+    line-height: 1.6;
+    margin-bottom: 34px;
+  }
+
+  .cover-author {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 340px;
+  }
+
+  .cover-author .name { color: white; font-weight: 700; font-size: 14px; }
+  .cover-author .inn  { color: rgba(255,255,255,.45); font-size: 11px; letter-spacing: 1px; }
+
+  .cover-5 {
+    display: flex;
+    gap: 0;
+    margin-top: 34px;
+  }
+
+  .c5-item {
+    flex: 1;
+    padding: 18px 10px;
+    text-align: center;
+    position: relative;
+  }
+
+  .c5-item::before {
+    content: '';
+    display: block;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    font-size: 18px;
+    line-height: 40px;
+  }
+
+  .c5-item:nth-child(1) { border-left: 3px solid var(--e1); }
+  .c5-item:nth-child(2) { border-left: 3px solid var(--e2); }
+  .c5-item:nth-child(3) { border-left: 3px solid var(--e3); }
+  .c5-item:nth-child(4) { border-left: 3px solid var(--e4); }
+  .c5-item:nth-child(5) { border-left: 3px solid var(--e5); }
+
+  .c5-num {
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+
+  .c5-item:nth-child(1) .c5-num { color: var(--e1); }
+  .c5-item:nth-child(2) .c5-num { color: var(--e2); }
+  .c5-item:nth-child(3) .c5-num { color: var(--e3); }
+  .c5-item:nth-child(4) .c5-num { color: var(--e4); }
+  .c5-item:nth-child(5) .c5-num { color: var(--e5); }
+
+  .c5-label { font-size: 10px; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: 1px; }
+
+  .cover-footer {
+    padding: 14px 22mm;
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,.3);
+  }
+
+  .cover-footer .brand { font-size: 18px; font-weight: 900; color: white; }
+  .cover-footer .brand em { color: var(--accent); font-style: normal; }
+  .cover-footer .date { font-size: 11px; color: rgba(255,255,255,.4); text-align: right; }
+
+  /* ── SECTION HEADERS ──────────────────────── */
+  .section-header { margin-bottom: 22px; }
+
+  .section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--navy);
+    letter-spacing: -.5px;
+    line-height: 1.2;
+  }
+
+  .section-divider {
+    height: 4px;
+    border-radius: 2px;
+    margin-top: 10px;
+  }
+
+  /* единичка-цвета */
+  .e1 { color: var(--e1); }
+  .e2 { color: var(--e2); }
+  .e3 { color: var(--e3); }
+  .e4 { color: var(--e4); }
+  .e5 { color: var(--e5); }
+
+  .bg-e1 { background: var(--e1); }
+  .bg-e2 { background: var(--e2); }
+  .bg-e3 { background: var(--e3); }
+  .bg-e4 { background: var(--e4); }
+  .bg-e5 { background: var(--e5); }
+
+  /* ── CARDS ────────────────────────────────── */
+  .cards { display: grid; gap: 12px; margin: 14px 0; }
+  .cards-2 { grid-template-columns: 1fr 1fr; }
+  .cards-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .cards-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+  .card {
+    background: var(--light);
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid var(--border);
+  }
+
+  .card h3 { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--navy); }
+  .card p  { font-size: 12px; color: #475569; margin: 0; }
+
+  /* ── BIG STATS ────────────────────────────── */
+  .stats-row {
+    display: grid;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 14px 0;
+  }
+
+  .stat-cell {
+    padding: 18px 14px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat-cell:last-child { border-right: none; }
+
+  .stat-cell .big {
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-cell .lbl { font-size: 11px; color: var(--muted); line-height: 1.3; }
+
+  /* ── TABLE ────────────────────────────────── */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12.5px; }
+  th { padding: 9px 12px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .5px; color: white; }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  tr:nth-child(even) td { background: var(--light); }
+  tr:last-child td { border-bottom: none; }
+  .ok  { color: var(--green); font-weight: 700; }
+  .bad { color: var(--red);   font-weight: 700; }
+  .mid { color: var(--gold);  font-weight: 700; }
+
+  /* ── ЕДИНИЧКА HEADER ──────────────────────── */
+  .unit-header {
+    border-radius: 12px;
+    padding: 20px 22px;
+    color: white;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .unit-badge {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  .unit-title { font-size: 22px; font-weight: 900; letter-spacing: -.5px; }
+  .unit-sub   { font-size: 13px; color: rgba(255,255,255,.75); margin-top: 3px; }
+
+  /* ── CALLOUT ──────────────────────────────── */
+  .callout {
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 14px 0;
+  }
+
+  .callout-navy  { background: var(--navy); color: white; }
+  .callout-navy h3 { color: var(--gold); font-size: 13px; margin-bottom: 6px; }
+  .callout-navy p  { color: rgba(255,255,255,.8); font-size: 12.5px; margin: 0; }
+
+  .callout-warn  { background: #fff8f0; border-left: 4px solid var(--accent); }
+  .callout-warn h3 { color: var(--accent); font-size: 13px; margin-bottom: 4px; }
+  .callout-warn p  { font-size: 12.5px; margin: 0; color: #3d2b1a; }
+
+  .callout-green { background: #f0faf4; border-left: 4px solid var(--green); }
+  .callout-green h3 { color: var(--green); font-size: 13px; margin-bottom: 4px; }
+  .callout-green p  { font-size: 12.5px; margin: 0; color: #1a3d29; }
+
+  /* ── AVATAR CARD ──────────────────────────── */
+  .avatar-card {
+    background: var(--navy);
+    color: white;
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 14px 0;
+  }
+
+  .avatar-head {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .avatar-emoji { font-size: 42px; }
+
+  .avatar-name { font-size: 20px; font-weight: 800; }
+  .avatar-role { color: rgba(255,255,255,.5); font-size: 12px; margin-top: 2px; }
+
+  .avatar-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .avatar-col { padding: 14px 20px; border-right: 1px solid rgba(255,255,255,.08); }
+  .avatar-col:last-child { border-right: none; }
+  .avatar-col h4 { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,.4); margin-bottom: 8px; }
+  .avatar-col ul { list-style: none; }
+  .avatar-col ul li { font-size: 12px; color: rgba(255,255,255,.8); padding: 3px 0; padding-left: 14px; position: relative; }
+  .avatar-col ul li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
+
+  /* ── FUNNEL ───────────────────────────────── */
+  .funnel { margin: 14px 0; }
+  .f-row {
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 3px;
+  }
+  .f-label {
+    width: 180px;
+    flex-shrink: 0;
+    padding: 10px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-right: none;
+    display: flex;
+    align-items: center;
+  }
+  .f-bar-wrap {
+    flex: 1;
+    background: var(--border);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+  .f-bar {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    min-height: 38px;
+  }
+  .f-bar span { color: white; font-size: 11px; font-weight: 700; }
+  .f-val {
+    width: 90px;
+    flex-shrink: 0;
+    padding: 10px 8px;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 700;
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-left: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  /* ── TIMELINE ─────────────────────────────── */
+  .tl { margin: 14px 0; }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    margin-bottom: 2px;
+  }
+  .tl-date {
+    padding: 12px 10px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tl-body {
+    padding: 12px 16px;
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-left: none;
+  }
+  .tl-body h3 { font-size: 13px; font-weight: 700; margin-bottom: 3px; color: var(--navy); }
+  .tl-body p  { font-size: 11.5px; color: var(--muted); margin: 0; }
+
+  /* ── METRIC BOX ───────────────────────────── */
+  .metric-main {
+    border: 3px solid var(--e5);
+    border-radius: 14px;
+    padding: 24px;
+    text-align: center;
+    margin: 14px 0;
+    background: #faf5ff;
+  }
+
+  .metric-main .num {
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--e5);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .metric-main .name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .metric-main .desc { font-size: 13px; color: var(--muted); }
+
+  /* ── PYRAMID (5 единичек) ─────────────────── */
+  .pyramid { margin: 16px 0; }
+
+  .pyr-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    gap: 10px;
+  }
+
+  .pyr-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    color: white;
+    font-size: 14px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .pyr-content {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .pyr-label { font-size: 13px; font-weight: 700; }
+  .pyr-value { font-size: 12px; color: #475569; }
+
+  /* ── QUOTE ────────────────────────────────── */
+  .quote {
+    border-left: 4px solid var(--gold);
+    padding: 12px 16px;
+    margin: 14px 0;
+    background: #fffdf0;
+  }
+
+  .quote p { font-size: 13px; font-style: italic; color: var(--text); margin-bottom: 4px; }
+  .quote .attr { font-size: 11px; color: var(--muted); font-style: normal; font-weight: 600; }
+
+  /* ── CHECKLIST ────────────────────────────── */
+  .checklist { list-style: none; padding: 0; margin: 10px 0; }
+  .checklist li {
+    padding: 7px 0;
+    padding-left: 24px;
+    position: relative;
+    font-size: 12.5px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; position: absolute; left: 0; font-weight: 900; }
+  .checklist.e1 li::before { color: var(--e1); }
+  .checklist.e2 li::before { color: var(--e2); }
+  .checklist.e3 li::before { color: var(--e3); }
+  .checklist.e4 li::before { color: var(--e4); }
+  .checklist.e5 li::before { color: var(--e5); }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+  .tag-now  { background: #fee2e2; color: #991b1b; }
+  .tag-soon { background: #fef3c7; color: #92400e; }
+  .tag-plan { background: #dbeafe; color: #1e40af; }
+
+  /* ── PAGE FOOTER ──────────────────────────── */
+  .pfoot {
+    position: absolute;
+    bottom: 7mm;
+    left: 20mm; right: 20mm;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 5px;
+  }
+
+  h2 { font-size: 16px; font-weight: 800; color: var(--navy); margin: 18px 0 8px; }
+  h3 { font-size: 13px; font-weight: 700; color: var(--blue); margin: 12px 0 5px; }
+  p  { margin-bottom: 8px; color: #374151; }
+
+  .sep { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .pill-r { background: #fee2e2; color: #991b1b; }
+  .pill-g { background: #d1fae5; color: #065f46; }
+  .pill-b { background: #dbeafe; color: #1e40af; }
+  .pill-o { background: #ffedd5; color: #9a3412; }
+  .pill-y { background: #fef3c7; color: #92400e; }
+
+  strong { font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     ОБЛОЖКА
+══════════════════════════════════ -->
+<div class="page cover">
+  <div class="cover-stripe"></div>
+  <div class="cover-body">
+    <div class="cover-eyebrow">Стратегия развития · 2026–2027</div>
+    <h1>Пять<br><em>единичек</em><br>CrazyDrift</h1>
+    <p class="cover-sub">Стратегия развития компании на рынке России в условиях экономической нестабильности. По методике Михаила Гребенюка.</p>
+
+    <div class="cover-author">
+      <span class="name">ИП Пролеев Кирилл Валерьевич</span>
+      <span class="inn">ИНН: 183509360206 · CrazyDrift</span>
+    </div>
+
+    <div class="cover-5">
+      <div class="c5-item">
+        <div class="c5-num">1</div>
+        <div class="c5-label">Ниша</div>
+      </div>
+      <div class="c5-item">
+        <div class="c5-num">1</div>
+        <div class="c5-label">Аватар</div>
+      </div>
+      <div class="c5-item">
+        <div class="c5-num">1</div>
+        <div class="c5-label">Продукт</div>
+      </div>
+      <div class="c5-item">
+        <div class="c5-num">1</div>
+        <div class="c5-label">Канал</div>
+      </div>
+      <div class="c5-item">
+        <div class="c5-num">1</div>
+        <div class="c5-label">Метрика</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <div class="brand">Crazy<em>Drift</em></div>
+    <div class="date">Конфиденциально<br>Май 2026</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     СТРАНИЦА 2 — ВВЕДЕНИЕ
+══════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-eyebrow" style="color:var(--muted);">
+      Введение
+    </div>
+    <div class="section-title">Почему «Пять единичек»</div>
+    <div class="section-divider" style="background:linear-gradient(90deg,var(--e1),var(--e5));"></div>
+  </div>
+
+  <div class="quote">
+    <p>«Большинство предпринимателей проигрывают не потому, что делают что-то не то. Они проигрывают потому, что пытаются делать всё одновременно. Выигрывает тот, кто нашёл одну нишу, одного клиента, один продукт, один канал и одну метрику — и довёл это до совершенства.»</p>
+    <div class="attr">— Михаил Гребенюк, «Отдел продаж по захвату рынка»</div>
+  </div>
+
+  <p>Методика «Пять единичек» — это инструмент фокусировки. В кризис предприниматели склонны распылять ресурсы: запускать новые продукты, выходить на новые рынки, тестировать каналы. Это ошибка. Кризис требует противоположного — сужения фокуса до точки, где каждый вложенный рубль даёт максимальную отдачу.</p>
+
+  <h2>Контекст: CrazyDrift в 2026 году</h2>
+
+  <div class="cards cards-3" style="margin:14px 0;">
+    <div class="card" style="border-left:3px solid var(--e1);">
+      <h3>Текущая ситуация</h3>
+      <p>Сеть франшиз в сфере развлечений (картинг, дрифт, детские праздники, корпоративы). Собственная CRM на AI-платформе. Есть работающий Telegram-бот для лидогенерации.</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--e2);">
+      <h3>Проблема сейчас</h3>
+      <p>Спад выручки по всем филиалам по направлению мероприятий. Неопределённость рынка. Снижение корпоративных бюджетов. Родители экономят на праздниках.</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--e4);">
+      <h3>Возможность</h3>
+      <p>Ожидаемый кризис сентябрь–октябрь 2026 создаёт волну людей с капиталом, ищущих защиту и стабильный доход. Это горячая аудитория для франшизы.</p>
+    </div>
+  </div>
+
+  <h2>Структура стратегии</h2>
+
+  <div class="pyramid">
+    <div class="pyr-row">
+      <div class="pyr-num bg-e1">1</div>
+      <div class="pyr-content" style="background:#fff2ee;">
+        <div class="pyr-label e1">ЕДИНИЧКА 1 — НИША</div>
+        <div class="pyr-value">Точное определение рынка: не «развлечения», а конкретный сегмент</div>
+      </div>
+    </div>
+    <div class="pyr-row">
+      <div class="pyr-num bg-e2">2</div>
+      <div class="pyr-content" style="background:#fffbf0;">
+        <div class="pyr-label e2">ЕДИНИЧКА 2 — АВАТАР</div>
+        <div class="pyr-value">Один идеальный клиент с описанием до деталей</div>
+      </div>
+    </div>
+    <div class="pyr-row">
+      <div class="pyr-num bg-e3">3</div>
+      <div class="pyr-content" style="background:#f0f5ff;">
+        <div class="pyr-label e3">ЕДИНИЧКА 3 — ПРОДУКТ</div>
+        <div class="pyr-value">Один приоритетный продукт/оффер который закрывает боль аватара</div>
+      </div>
+    </div>
+    <div class="pyr-row">
+      <div class="pyr-num bg-e4">4</div>
+      <div class="pyr-content" style="background:#f0faf4;">
+        <div class="pyr-label e4">ЕДИНИЧКА 4 — КАНАЛ</div>
+        <div class="pyr-value">Один главный канал привлечения, доведённый до совершенства</div>
+      </div>
+    </div>
+    <div class="pyr-row">
+      <div class="pyr-num bg-e5">5</div>
+      <div class="pyr-content" style="background:#faf5ff;">
+        <div class="pyr-label e5">ЕДИНИЧКА 5 — МЕТРИКА</div>
+        <div class="pyr-value">Одна цифра, по которой оцениваем успех каждой недели</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pfoot"><span>CrazyDrift · Стратегия «Пять единичек» · 2026–2027</span><span>Конфиденциально</span></div>
+</div>
+
+<!-- ══════════════════════════════════
+     СТРАНИЦА 3 — ЕДИНИЧКА 1: НИША
+══════════════════════════════════ -->
+<div class="page">
+  <div class="unit-header" style="background:linear-gradient(135deg,#b03a00,var(--e1));">
+    <div class="unit-badge">1</div>
+    <div>
+      <div class="unit-title">Единичка первая — НИША</div>
+      <div class="unit-sub">Один целевой рынок. Не «все кто хочет купить», а точный сегмент.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warn">
+    <h3>⚠ Ошибка, которую делает большинство</h3>
+    <p>CrazyDrift сейчас работает одновременно на два рынка: <strong>B2C развлечения</strong> (праздники, корпоративы) и <strong>B2B франшиза</strong> (продажа бизнеса). В кризис оба рынка требуют разных ресурсов, разных каналов и разных сообщений. Попытка тянуть оба — распыляет команду и бюджет.</p>
+  </div>
+
+  <h2>Выбор ниши для 2026–2027</h2>
+
+  <table>
+    <thead><tr><th style="background:var(--navy);">Критерий</th><th style="background:var(--e1);">B2C Развлечения</th><th style="background:var(--e4);">B2B Франшиза</th></tr></thead>
+    <tbody>
+      <tr><td>Динамика спроса в кризис</td><td class="bad">↓ Падает</td><td class="ok">↑ Растёт</td></tr>
+      <tr><td>Средний чек</td><td class="mid">5 000–50 000 ₽</td><td class="ok">12 000 000 ₽+</td></tr>
+      <tr><td>Цикл сделки</td><td class="ok">1–7 дней</td><td class="mid">1–6 месяцев</td></tr>
+      <tr><td>Маржинальность</td><td class="mid">Средняя</td><td class="ok">Высокая</td></tr>
+      <tr><td>Масштабируемость</td><td class="bad">Ограничена локацией</td><td class="ok">Вся Россия</td></tr>
+      <tr><td>Риск снижения выручки</td><td class="bad">Высокий</td><td class="ok">Низкий (кризис = спрос)</td></tr>
+      <tr><td>Потенциал 2026–2027</td><td class="bad">Стагнация</td><td class="ok">Пиковый рост</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-green">
+    <h3>✓ Решение: главная ниша на 2026–2027</h3>
+    <p><strong>Развитие франшизной сети CrazyDrift</strong> — продажа готового бизнеса людям с капиталом от 8 млн рублей, которые хотят защитить накопления и получить стабильный доход в нестабильное время.</p>
+    <p style="margin-top:6px;">B2C развлечения остаётся <strong>операционной базой</strong> (кормит текущий бизнес) и <strong>витриной продукта</strong> для потенциальных франчайзи. Но не получает приоритета в маркетинге.</p>
+  </div>
+
+  <h2>Точное определение ниши</h2>
+
+  <div class="card" style="background:var(--navy);color:white;padding:18px 20px;">
+    <p style="color:rgba(255,255,255,.6);font-size:11px;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">Формулировка ниши</p>
+    <p style="font-size:16px;font-weight:700;color:white;line-height:1.5;margin:0;">
+      Продажа франшизы развлекательного центра CrazyDrift предпринимателям и инвесторам в городах с населением 200 000+, имеющим свободный капитал от 8 млн рублей и мотивацию защитить деньги от девальвации или создать альтернативный источник дохода в условиях экономической нестабильности 2026–2027 гг.
+    </p>
+  </div>
+
+  <div class="pfoot"><span>CrazyDrift · Стратегия «Пять единичек» · 2026–2027</span><span>Конфиденциально</span></div>
+</div>
+
+<!-- ══════════════════════════════════
+     СТРАНИЦА 4 — ЕДИНИЧКА 2: АВАТАР
+══════════════════════════════════ -->
+<div class="page">
+  <div class="unit-header" style="background:linear-gradient(135deg,#b37800,var(--e2));color:var(--navy);">
+    <div class="unit-badge" style="color:var(--navy);">2</div>
+    <div>
+      <div class="unit-title" style="color:var(--navy);">Единичка вторая — АВАТАР</div>
+      <div class="unit-sub" style="color:rgba(0,0,0,.5);">Один идеальный клиент. Знаем о нём больше, чем он сам о себе.</div>
+    </div>
+  </div>
+
+  <p>Аватар — это не «мужчина 25–55 лет с деньгами». Это конкретный человек с именем, историей, страхами и мечтами. Чем точнее аватар — тем точнее попадает рекламное сообщение.</p>
+
+  <div class="avatar-card">
+    <div class="avatar-head">
+      <div class="avatar-emoji">👨‍💼</div>
+      <div>
+        <div class="avatar-name">Алексей, 42 года. Екатеринбург.</div>
+        <div class="avatar-role">Бывший коммерческий директор / владелец малого бизнеса</div>
+      </div>
+    </div>
+    <div class="avatar-body">
+      <div class="avatar-col">
+        <h4>Профиль</h4>
+        <ul>
+          <li>Топ-менеджер или предприниматель, 35–52 года</li>
+          <li>Город 300 000+ жителей, не Москва</li>
+          <li>Свободный капитал: 8–20 млн ₽</li>
+          <li>Женат, дети, ипотека закрыта</li>
+          <li>Telegram, VK — активный пользователь</li>
+        </ul>
+      </div>
+      <div class="avatar-col">
+        <h4>Ситуация сейчас</h4>
+        <ul>
+          <li>Боится потерять накопления к девальвации</li>
+          <li>Текущий бизнес/работа нестабильны</li>
+          <li>Смотрит на франшизы, но боится рисков</li>
+          <li>Не хочет строить с нуля — хочет систему</li>
+          <li>Нет времени разбираться в деталях</li>
+        </ul>
+      </div>
+      <div class="avatar-col">
+        <h4>Страхи</h4>
+        <ul>
+          <li>«Вложу деньги — и прогорю»</li>
+          <li>«Не разберусь в бизнесе развлечений»</li>
+          <li>«Нет времени управлять»</li>
+          <li>«А вдруг кризис убьёт и этот бизнес»</li>
+          <li>«Меня обманут, как часто бывает»</li>
+        </ul>
+      </div>
+      <div class="avatar-col">
+        <h4>Мечты</h4>
+        <ul>
+          <li>Пассивный доход от работающей системы</li>
+          <li>Бизнес, которым управляет команда</li>
+          <li>Защитить деньги от инфляции</li>
+          <li>Занятость детей — и прибыль</li>
+          <li>Гордость: «я сделал это»</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2>Как аватар принимает решение</h2>
+
+  <div class="funnel">
+    <div class="f-row">
+      <div class="f-label">Осознаёт риски</div>
+      <div class="f-bar-wrap"><div class="f-bar" style="width:100%;background:var(--e1);"><span>«Деньги надо куда-то вложить»</span></div></div>
+      <div class="f-val e1">100%</div>
+    </div>
+    <div class="f-row">
+      <div class="f-label">Рассматривает варианты</div>
+      <div class="f-bar-wrap"><div class="f-bar" style="width:75%;background:var(--e2);"><span>Недвижимость, депозит, бизнес</span></div></div>
+      <div class="f-val e2">75%</div>
+    </div>
+    <div class="f-row">
+      <div class="f-label">Интересуется франшизой</div>
+      <div class="f-bar-wrap"><div class="f-bar" style="width:45%;background:var(--e3);"><span>Ищет готовые модели</span></div></div>
+      <div class="f-val e3">45%</div>
+    </div>
+    <div class="f-row">
+      <div class="f-label">Изучает CrazyDrift</div>
+      <div class="f-bar-wrap"><div class="f-bar" style="width:18%;background:var(--e4);"><span>Смотрит сайт, бот, кейсы</span></div></div>
+      <div class="f-val e4">18%</div>
+    </div>
+    <div class="f-row">
+      <div class="f-label">Оставляет заявку</div>
+      <div class="f-bar-wrap"><div class="f-bar" style="width:7%;background:var(--e5);"><span>Готов к разговору</span></div></div>
+      <div class="f-val e5">7%</div>
+    </div>
+  </div>
+
+  <div class="callout callout-navy">
+    <h3>Ключевой инсайт по аватару</h3>
+    <p>Аватар не ищет «франшизу развлечений». Он ищет <strong>защиту капитала и предсказуемый доход</strong>. CrazyDrift — это ответ на его страх потерять деньги, а не на желание открыть развлекательный центр. Это меняет всё: как мы говорим, что показываем и что обещаем.</p>
+  </div>
+
+  <div class="pfoot"><span>CrazyDrift · Стратегия «Пять единичек» · 2026–2027</span><span>Конфиденциально</span></div>
+</div>
+
+<!-- ══════════════════════════════════
+     СТРАНИЦА 5 — ЕДИНИЧКА 3: ПРОДУКТ
+══════════════════════════════════ -->
+<div class="page">
+  <div class="unit-header" style="background:linear-gradient(135deg,#0f3460,var(--e3));">
+    <div class="unit-badge">3</div>
+    <div>
+      <div class="unit-title">Единичка третья — ПРОДУКТ</div>
+      <div class="unit-sub">Один главный оффер. Не «мы делаем всё» — а «мы лучшие в одном».</div>
+    </div>
+  </div>
+
+  <p>По Гребенюку, продукт — это не просто товар или услуга. Это <strong>трансформация</strong>: из точки А (проблема клиента) в точку Б (желаемый результат). Чем конкретнее трансформация — тем проще продавать.</p>
+
+  <div class="cards cards-2">
+    <div class="card" style="border:2px solid var(--border);">
+      <h3 style="color:var(--muted);">❌ Как НЕ надо формулировать</h3>
+      <p style="font-size:13px;margin-top:8px;color:#475569;">«Франшиза развлекательного центра CrazyDrift — детские праздники, корпоративы, картинг, дрифт на автодроме»</p>
+      <p style="font-size:12px;color:var(--muted);margin:0;margin-top:8px;">Звучит как реклама услуг, а не инвестиционного продукта</p>
+    </div>
+    <div class="card" style="border:2px solid var(--e3);">
+      <h3 style="color:var(--e3);">✓ Как НАДО формулировать</h3>
+      <p style="font-size:13px;margin-top:8px;color:var(--navy);font-weight:600;">«Готовый бизнес с доходностью 15–25% годовых в сфере, которая не умирает даже в кризис — люди продолжают праздновать»</p>
+      <p style="font-size:12px;color:var(--muted);margin:0;margin-top:8px;">Это язык инвестора, а не покупателя услуг</p>
+    </div>
+  </div>
+
+  <h2>Продуктовая линейка по приоритетам</h2>
+
+  <table>
+    <thead><tr><th style="background:var(--navy);">Продукт</th><th style="background:var(--navy);">Для кого</th><th style="background:var(--navy);">Чек</th><th style="background:var(--navy);">Приоритет 2026</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Франшиза CrazyDrift (полный формат)</strong></td>
+        <td>Аватар с капиталом 12М+</td>
+        <td class="ok">12–20 млн ₽</td>
+        <td><span class="pill pill-r">🔥 Главный</span></td>
+      </tr>
+      <tr>
+        <td>Антикризисный советник (бот)</td>
+        <td>Любой МСП</td>
+        <td class="mid">0 / 990 ₽</td>
+        <td><span class="pill pill-o">Входная точка</span></td>
+      </tr>
+      <tr>
+        <td>Франшиза (облегчённый формат)</td>
+        <td>Капитал 5–8 млн ₽</td>
+        <td class="mid">5–8 млн ₽</td>
+        <td><span class="pill pill-y">Разработать в 2027</span></td>
+      </tr>
+      <tr>
+        <td>B2C мероприятия (текущие)</td>
+        <td>Физ. лица, компании</td>
+        <td>5–80 тыс. ₽</td>
+        <td><span class="pill pill-b">Поддерживать</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Оффер: формулировка для аватара</h2>
+
+  <div class="card" style="background:var(--navy);color:white;padding:20px;">
+    <p style="color:rgba(255,255,255,.5);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">Главный оффер CrazyDrift 2026</p>
+    <p style="font-size:15px;font-weight:700;color:white;line-height:1.6;margin-bottom:14px;">
+      Откройте развлекательный центр CrazyDrift в своём городе по готовой системе, которая уже работает в [N] точках России. Срок окупаемости — 18–24 месяца. Управляющая компания берёт на себя маркетинг, обучение и операционную поддержку.
+    </p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <span style="background:rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;font-size:11px;color:rgba(255,255,255,.8);">✓ Работающая модель</span>
+      <span style="background:rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;font-size:11px;color:rgba(255,255,255,.8);">✓ Поддержка 24/7</span>
+      <span style="background:rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;font-size:11px;color:rgba(255,255,255,.8);">✓ ROI 18–24 мес</span>
+      <span style="background:rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;font-size:11px;color:rgba(255,255,255,.8);">✓ Антикризисный бизнес</span>
+    </div>
+  </div>
+
+  <div class="callout callout-warn" style="margin-top:14px;">
+    <h3>Нюанс: продукт и воронка — это разные вещи</h3>
+    <p>Антикризисный советник-бот — это <strong>не продукт для продажи</strong>, это инструмент привлечения. Он строит доверие и готовит аватара к разговору о франшизе. Воронка: Бот → Доверие → Разговор → Сделка.</p>
+  </div>
+
+  <div class="pfoot"><span>CrazyDrift · Стратегия «Пять единичек» · 2026–2027</span><span>Конфиденциально</span></div>
+</div>
+
+<!-- ══════════════════════════════════
+     СТРАНИЦА 6 — ЕДИНИЧКА 4: КАНАЛ
+══════════════════════════════════ -->
+<div class="page">
+  <div class="unit-header" style="background:linear-gradient(135deg,#0f5232,var(--e4));">
+    <div class="unit-badge">4</div>
+    <div>
+      <div class="unit-title">Единичка четвёртая — КАНАЛ</div>
+      <div class="unit-sub">Один канал привлечения. Доведённый до автоматизма, а не десять недоработанных.</div>
+    </div>
+  </div>
+
+  <p>Гребенюк настаивает: пока один канал не даёт 30+ квалифицированных лидов в месяц стабильно — не открывай следующий. Распыление убивает конверсию и делает данные нечитаемыми.</p>
+
+  <h2>Выбор главного канала</h2>
+
+  <table>
+    <thead><tr><th style="background:var(--navy);">Канал</th><th style="background:var(--navy);">Целевая аудитория</th><th style="background:var(--navy);">Стоимость лида</th><th style="background:var(--navy);">Качество</th><th style="background:var(--navy);">Решение</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>🤖 Антикризисный бот</strong></td>
+        <td>МСП-предприниматели</td>
+        <td class="ok">200–400 ₽</td>
+        <td class="ok">Тёплые, доверяют</td>
+        <td><span class="pill pill-r">✓ Главный</span></td>
+      </tr>
+      <tr>
+        <td>🔍 Яндекс.Директ (поиск)</td>
+        <td>Ищут «купить франшизу»</td>
+        <td class="mid">1 500–4 000 ₽</td>
+        <td class="mid">Холодные, конкурентно</td>
+        <td><span class="pill pill-y">Вторичный</span></td>
+      </tr>
+      <tr>
+        <td>🎯 VK Target</td>
+        <td>Предприниматели, топы</td>
+        <td class="mid">800–2 000 ₽</td>
+        <td class="mid">Средние</td>
+        <td><span class="pill pill-b">Для бота</span></td>
+      </tr>
+      <tr>
+        <td>📢 Яндекс Карты / 2GIS</td>
+        <td>Клиенты B2C (мероприятия)</td>
+        <td class="ok">Дёшево</td>
+        <td>B2C, не франшиза</td>
+        <td><span class="pill pill-b">Для B2C</span></td>
+      </tr>
+      <tr>
+        <td>🗣️ Сарафан / партнёры</td>
+        <td>Знакомые предпринимателей</td>
+        <td class="ok">~0 ₽</td>
+        <td class="ok">Высокое</td>
+        <td><span class="pill pill-g">Усилить реф.</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-green">
+    <h3>✓ Главный канал: Антикризисный советник-бот</h3>
+    <p><strong>Почему он выигрывает у всех остальных:</strong> человек приходит с болью (кризис в бизнесе), бот реально помогает ему, строит доверие за несколько сессий — и в нужный момент органично предлагает рассмотреть CrazyDrift. Это инbound-лид с максимальным доверием. Он НЕ чувствует себя мишенью рекламы.</p>
+  </div>
+
+  <h2>Архитектура канала</h2>
+
+  <div class="funnel">
+    <div class="f-row">
+      <div class="f-label">Реклама → Бот</div>
+      <div class="f-bar-wrap"><div class="f-bar" style="width:100%;background:var(--navy);"><span>Директ (кризис-запросы) + VK Target (предприниматели)</span></div></div>
+      <div class="f-val">Трафик</div>
+    </div>
+    <div class="f-row">
+      <div class="f-label">Первый контакт</div>
+      <div class="f-bar-wrap"><div class="f-bar" style="width:80%;background:var(--e3);"><span>Плейбук → реальная помощь → профиль пользователя</span></div></div>
+      <div class="f-val e3">80%</div>
+    </div>
+    <div class="f-row">
+      <div class="f-label">Возвратные сессии</div>
+      <div class="f-bar-wrap"><div class="f-bar" style="width:40%;background:var(--e4);"><span>Бот напоминает, пользователь возвращается 2–5 раз</span></div></div>
+      <div class="f-val e4">40%</div>
+    </div>
+    <div class="f-row">
+      <div class="f-label">Сигналы перехода</div>
+      <div class="f-bar-wrap"><div class="f-bar" style="width:15%;background:var(--e2);"><span>AI детектирует: «устал», «хочу другое», «есть деньги»</span></div></div>
+      <div class="f-val e2">15%</div>
+    </div>
+    <div class="f-row">
+      <div class="f-label">Квалиф. лид → менеджер</div>
+      <div class="f-bar-wrap"><div class="f-bar" style="width:5%;background:var(--e1);"><span>Горячая карточка уходит менеджеру CrazyDrift</span></div></div>
+      <div class="f-val e1">5%</div>
+    </div>
+  </div>
+
+  <h2>Триггеры перехода от бота к менеджеру</h2>
+
+  <ul class="checklist e4">
+    <li>Пользователь выбрал раздел «Думаю сменить направление» <span class="tag tag-now">Автоматически</span></li>
+    <li>В тексте: «устал», «исчерпал», «ищу другое», «хочу продать» <span class="tag tag-now">AI детектирует</span></li>
+    <li>Упомянул свободный капитал от 5 млн рублей <span class="tag tag-now">AI детектирует</span></li>
+    <li>Спросил про франшизы или готовые бизнес-модели <span class="tag tag-now">Ключевое слово</span></li>
+    <li>Использует бот 5+ сессий (высокое доверие сформировано) <span class="tag tag-now">Счётчик</span></li>
+  </ul>
+
+  <div class="pfoot"><span>CrazyDrift · Стратегия «Пять единичек» · 2026–2027</span><span>Конфиденциально</span></div>
+</div>
+
+<!-- ══════════════════════════════════
+     СТРАНИЦА 7 — ЕДИНИЧКА 5: МЕТРИКА
+══════════════════════════════════ -->
+<div class="page">
+  <div class="unit-header" style="background:linear-gradient(135deg,#4a235a,var(--e5));">
+    <div class="unit-badge">5</div>
+    <div>
+      <div class="unit-title">Единичка пятая — МЕТРИКА</div>
+      <div class="unit-sub">Одна цифра, которая говорит: мы на пути или сошли с него.</div>
+    </div>
+  </div>
+
+  <div class="quote">
+    <p>«Не надо отслеживать 50 метрик. Нужна одна — та, которая является следствием всего остального. Если она растёт — система работает. Если падает — ищи, где сломалось.»</p>
+    <div class="attr">— Михаил Гребенюк</div>
+  </div>
+
+  <div class="metric-main">
+    <div class="num">QLF</div>
+    <div class="name">Квалифицированных лидов в месяц</div>
+    <div class="desc">Человек, которому бот передал контакт менеджера CrazyDrift и который подтвердил интерес к разговору о франшизе</div>
+  </div>
+
+  <div class="callout callout-warn">
+    <h3>Почему именно эта метрика, а не «число сделок»?</h3>
+    <p>Сделка — слишком длинный цикл (1–6 месяцев). Если мы будем мерить только сделки, то месяцами не будем видеть результат. Квалифицированный лид — это управляемый результат, который происходит каждую неделю и показывает здоровье воронки.</p>
+  </div>
+
+  <h2>Цели по метрике</h2>
+
+  <div class="stats-row" style="grid-template-columns:repeat(4,1fr);">
+    <div class="stat-cell">
+      <div class="big" style="color:var(--muted);">3–5</div>
+      <div class="lbl">QLF / месяц<br>Июнь–Июль 2026<br><em>Тест и настройка</em></div>
+    </div>
+    <div class="stat-cell">
+      <div class="big" style="color:var(--e3);">10–15</div>
+      <div class="lbl">QLF / месяц<br>Август 2026<br><em>Оптимизация</em></div>
+    </div>
+    <div class="stat-cell">
+      <div class="big" style="color:var(--e1);">25–40</div>
+      <div class="lbl">QLF / месяц<br>Сент–Окт 2026<br><em>Пик кризиса</em></div>
+    </div>
+    <div class="stat-cell">
+      <div class="big" style="color:var(--e4);">50+</div>
+      <div class="lbl">QLF / месяц<br>2027<br><em>Масштаб</em></div>
+    </div>
+  </div>
+
+  <h2>Дерево метрик (что влияет на QLF)</h2>
+
+  <table>
+    <thead><tr><th style="background:var(--e5);">Метрика</th><th style="background:var(--e5);">Целевое значение</th><th style="background:var(--e5);">Кто отвечает</th></tr></thead>
+    <tbody>
+      <tr><td>Новых пользователей бота / мес</td><td>500–2 000</td><td>Маркетолог (реклама)</td></tr>
+      <tr><td>Retention (возвратных сессий)</td><td>>35%</td><td>Продуктовая команда (бот)</td></tr>
+      <tr><td>Сигналов перехода / мес</td><td>50–150</td><td>AI (автоматически)</td></tr>
+      <tr><td>Конверсия сигнал → QLF</td><td>>20%</td><td>Скрипт перехода в боте</td></tr>
+      <tr><td><strong>QLF / месяц (главная)</strong></td><td><strong>25–50</strong></td><td><strong>Вся система</strong></td></tr>
+      <tr><td>Конверсия QLF → Встреча</td><td>>50%</td><td>Менеджер CrazyDrift</td></tr>
+      <tr><td>Конверсия Встреча → Сделка</td><td>>10%</td><td>Менеджер + материалы</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-navy">
+    <h3>Дашборд на одном экране — еженедельный ритуал</h3>
+    <p>Каждый понедельник: открываем CRM, смотрим одну цифру — QLF за прошлую неделю. Если цифра в норме — всё хорошо. Если ниже — ищем конкретный сломанный шаг в воронке. Не 50 отчётов, а один экран и одно решение.</p>
+  </div>
+
+  <div class="pfoot"><span>CrazyDrift · Стратегия «Пять единичек» · 2026–2027</span><span>Конфиденциально</span></div>
+</div>
+
+<!-- ══════════════════════════════════
+     СТРАНИЦА 8 — СИНХРОНИЗАЦИЯ
+══════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-eyebrow" style="color:var(--navy);">Синхронизация системы</div>
+    <div class="section-title">Как пять единичек работают вместе</div>
+    <div class="section-divider" style="background:linear-gradient(90deg,var(--e1),var(--e2),var(--e3),var(--e4),var(--e5));"></div>
+  </div>
+
+  <p>Сила методики — в том, что все пять элементов усиливают друг друга. Если один не совпадает — система даёт сбой.</p>
+
+  <div class="card" style="padding:20px;margin:14px 0;background:var(--navy);color:white;">
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:14px;">
+      <div style="background:var(--e1);border-radius:6px;padding:10px;text-align:center;">
+        <div style="font-size:10px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:1px;">Ниша</div>
+        <div style="font-size:12px;font-weight:700;color:white;margin-top:4px;">Защита капитала через франшизу</div>
+      </div>
+      <div style="background:var(--e2);border-radius:6px;padding:10px;text-align:center;">
+        <div style="font-size:10px;color:rgba(0,0,0,.5);text-transform:uppercase;letter-spacing:1px;">Аватар</div>
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin-top:4px;">Алексей, 42, с 8М+ капиталом</div>
+      </div>
+      <div style="background:var(--e3);border-radius:6px;padding:10px;text-align:center;">
+        <div style="font-size:10px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:1px;">Продукт</div>
+        <div style="font-size:12px;font-weight:700;color:white;margin-top:4px;">Франшиза CrazyDrift (ROI 18–24 мес)</div>
+      </div>
+      <div style="background:var(--e4);border-radius:6px;padding:10px;text-align:center;">
+        <div style="font-size:10px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:1px;">Канал</div>
+        <div style="font-size:12px;font-weight:700;color:white;margin-top:4px;">Антикризисный советник-бот</div>
+      </div>
+      <div style="background:var(--e5);border-radius:6px;padding:10px;text-align:center;">
+        <div style="font-size:10px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:1px;">Метрика</div>
+        <div style="font-size:12px;font-weight:700;color:white;margin-top:4px;">QLF-лидов в месяц</div>
+      </div>
+    </div>
+    <p style="text-align:center;color:rgba(255,255,255,.6);font-size:12px;margin:0;">↓ Всё это работает как единая машина ↓</p>
+  </div>
+
+  <h2>Логика связей</h2>
+
+  <div class="cards cards-2">
+    <div class="card card-green" style="background:#f0faf4;border-left:3px solid var(--green);">
+      <h3>Ниша → Канал</h3>
+      <p style="font-size:12px;">Предприниматель в кризисе идёт в Яндекс с запросом «что делать бизнесу». Находит наш бот. Получает реальную помощь. Это точное попадание в нашу нишу через боль, а не через «купить франшизу».</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--e2);">
+      <h3>Аватар → Продукт</h3>
+      <p style="font-size:12px;">Алексей боится девальвации. Наш оффер — не «праздники», а «защита 12М в работающем бизнесе». Язык оффера соответствует страхам аватара — конверсия выше.</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--e3);">
+      <h3>Канал → Метрика</h3>
+      <p style="font-size:12px;">Бот строит доверие за несколько сессий. Менеджер получает только тех, кто уже готов к разговору. Конверсия встречи в сделку — в 2–3 раза выше холодного лида.</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--e5);">
+      <h3>Метрика → Ниша</h3>
+      <p style="font-size:12px;">QLF-метрика заставляет нас квалифицировать лидов строго по нише. Менеджер не тратит время на того, у кого нет 8М. Фокус сохраняется.</p>
+    </div>
+  </div>
+
+  <h2 style="margin-top:18px;">Критерии квалифицированного лида (QLF)</h2>
+
+  <ul class="checklist e5">
+    <li>Свободный капитал от 8 млн рублей <span class="tag tag-now">Обязательно</span></li>
+    <li>Город с населением от 200 000 человек <span class="tag tag-now">Обязательно</span></li>
+    <li>Выразил интерес к смене/диверсификации бизнеса <span class="tag tag-now">Обязательно</span></li>
+    <li>Минимум 3 сессии в боте (сформировано доверие) <span class="tag tag-soon">Желательно</span></li>
+    <li>Возраст 32–55 лет, предпринимательский опыт <span class="tag tag-soon">Желательно</span></li>
+    <li>Готов к звонку или встрече в течение 7 дней <span class="tag tag-plan">Идеально</span></li>
+  </ul>
+
+  <div class="pfoot"><span>CrazyDrift · Стратегия «Пять единичек» · 2026–2027</span><span>Конфиденциально</span></div>
+</div>
+
+<!-- ══════════════════════════════════
+     СТРАНИЦА 9 — ОПЕРАЦИОННЫЙ ПЛАН
+══════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-eyebrow" style="color:var(--muted);">Операционный план</div>
+    <div class="section-title">Что делаем и когда</div>
+    <div class="section-divider" style="background:var(--navy);"></div>
+  </div>
+
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-date" style="background:var(--e1);">МАЙ<br>2026</div>
+      <div class="tl-body">
+        <h3>🏗 Фундамент: разработка антикризисного бота</h3>
+        <p>Запуск Telegram-бота с 8 плейбуками · AI-персонализация через Claude · Профиль пользователя + UTM-трекинг · Воронка перехода в CrazyDrift · Лид-карточка для менеджера · Тест на первых 50 пользователях</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date" style="background:var(--e2);color:var(--navy);">ИЮНЬ<br>2026</div>
+      <div class="tl-body">
+        <h3>🚀 Запуск трафика и лендинга</h3>
+        <p>Одностраничный лендинг для Яндекс.Директ · Первые рекламные кампании по кризис-семантике · Тест 3 креативов в VK · Первые QLF-лиды · Замеряем стоимость лида, оптимизируем</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date" style="background:var(--e3);">ИЮЛЬ<br>2026</div>
+      <div class="tl-body">
+        <h3>📊 Оптимизация воронки</h3>
+        <p>Анализ первых данных: какие плейбуки читают, где уходят, какие триггеры срабатывают · Доработка скрипта перехода · Подключение VK-бота · Premium-подписка · Реферальная механика</p>
+      </div>
+    </div>
+    <div class="tl-item" style="">
+      <div class="tl-date" style="background:var(--e1);">АВГ<br>2026</div>
+      <div class="tl-body">
+        <h3>⚡ Подготовка к пику</h3>
+        <p>Масштабирование рекламного бюджета · Расширение контента плейбуков · Подготовка менеджеров к росту потока · Внедрение быстрого скрипта звонка (цель: связь с QLF за 30 минут)</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date" style="background:#7b0000;font-size:10px;">СЕНТ–<br>ОКТ<br>2026</div>
+      <div class="tl-body" style="background:#fff5f5;border-color:#fca5a5;">
+        <h3 style="color:#991b1b;">🔥 Пик кризиса — максимальный газ</h3>
+        <p>Максимальный рекламный бюджет · Контент под актуальные события · 24–48ч SLA на обработку QLF · Цель: 25–40 QLF/мес · Первые 3–5 сделок по франшизе</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date" style="background:var(--navy);">Q4<br>2026</div>
+      <div class="tl-body">
+        <h3>📈 Закрепление позиций</h3>
+        <p>Анализ ROI каналов · Оптимизация под сезон · Первые переговоры white-label · Подготовка к масштабированию в 2027 · Цель QLF: 40–50/мес</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date" style="background:var(--e4);">2027</div>
+      <div class="tl-body">
+        <h3>🌐 Масштабирование</h3>
+        <p>White-label для других франчайзинговых сетей · Облегчённый формат франшизы (5–8 млн) · Веб-версия с личным кабинетом · B2B-партнёрства · Экспорт в СНГ · Цель QLF: 50+/мес</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pfoot"><span>CrazyDrift · Стратегия «Пять единичек» · 2026–2027</span><span>Конфиденциально</span></div>
+</div>
+
+<!-- ══════════════════════════════════
+     СТРАНИЦА 10 — ФИНАНСЫ + ИТОГ
+══════════════════════════════════ -->
+<div class="page" style="display:flex;flex-direction:column;justify-content:space-between;min-height:297mm;">
+  <div>
+    <div class="section-header">
+      <div class="section-eyebrow" style="color:var(--muted);">Финансовая модель</div>
+      <div class="section-title">Цифры и ориентиры</div>
+      <div class="section-divider" style="background:var(--navy);"></div>
+    </div>
+
+    <div class="stats-row" style="grid-template-columns:repeat(4,1fr);margin-bottom:18px;">
+      <div class="stat-cell">
+        <div class="big" style="color:var(--e1);">420 000</div>
+        <div class="lbl">₽ затраты на запуск<br>MVP + реклама</div>
+      </div>
+      <div class="stat-cell">
+        <div class="big" style="color:var(--e3);">2–3</div>
+        <div class="lbl">месяца до<br>окупаемости</div>
+      </div>
+      <div class="stat-cell">
+        <div class="big" style="color:var(--e4);">×40</div>
+        <div class="lbl">ROI от одной<br>сделки по франшизе</div>
+      </div>
+      <div class="stat-cell">
+        <div class="big" style="color:var(--e5);">50+</div>
+        <div class="lbl">QLF в месяц<br>цель к 2027</div>
+      </div>
+    </div>
+
+    <table>
+      <thead><tr>
+        <th style="background:var(--navy);">Период</th>
+        <th style="background:var(--navy);">QLF/мес</th>
+        <th style="background:var(--navy);">Сделок/мес</th>
+        <th style="background:var(--navy);">Выручка подписки</th>
+        <th style="background:var(--navy);">Выручка франшиза</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Июнь–Июль 2026</td><td>3–5</td><td>0–1</td><td>25 000 ₽</td><td>0–1.5 млн ₽</td></tr>
+        <tr><td>Авг–Сент 2026</td><td>10–20</td><td>1–2</td><td>100 000 ₽</td><td>1.5–3 млн ₽</td></tr>
+        <tr style="background:#fff3ee;"><td><strong>Окт–Дек 2026</strong></td><td><strong>25–40</strong></td><td><strong>3–5</strong></td><td><strong>300 000 ₽</strong></td><td><strong>4.5–7.5 млн ₽</strong></td></tr>
+        <tr><td>2027 (в месяц)</td><td>50+</td><td>5–8</td><td>500 000 ₽</td><td>7.5–12 млн ₽</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-navy" style="margin-top:16px;">
+      <h3>Итоговая логика стратегии</h3>
+      <p>Мы строим машину, которая работает сама. Кризис создаёт аудиторию — антикризисный бот её собирает и прогревает — менеджер получает только готовых к разговору — сделки закрываются с высокой конверсией. Каждый элемент усиливает следующий. Это не реклама. Это система.</p>
+    </div>
+  </div>
+
+  <!-- ФИНАЛЬНЫЙ БЛОК -->
+  <div>
+    <div class="sep"></div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;">
+      <div style="padding:12px;text-align:center;border-right:1px solid var(--border);">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;">Ниша</div>
+        <div style="font-size:11px;font-weight:700;color:var(--e1);">Франшиза под защиту капитала</div>
+      </div>
+      <div style="padding:12px;text-align:center;border-right:1px solid var(--border);">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;">Аватар</div>
+        <div style="font-size:11px;font-weight:700;color:var(--e2);">Предприниматель 35–52, 8М+</div>
+      </div>
+      <div style="padding:12px;text-align:center;border-right:1px solid var(--border);">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;">Продукт</div>
+        <div style="font-size:11px;font-weight:700;color:var(--e3);">Франшиза CrazyDrift ROI 18–24м</div>
+      </div>
+      <div style="padding:12px;text-align:center;border-right:1px solid var(--border);">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;">Канал</div>
+        <div style="font-size:11px;font-weight:700;color:var(--e4);">Антикризисный советник-бот</div>
+      </div>
+      <div style="padding:12px;text-align:center;">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;">Метрика</div>
+        <div style="font-size:11px;font-weight:700;color:var(--e5);">QLF-лидов в месяц</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:10px 0;">
+      <div style="font-size:20px;font-weight:900;color:var(--navy);">Crazy<span style="color:var(--e1);">Drift</span> · ИП Пролеев Кирилл Валерьевич</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px;">ИНН 183509360206 · Стратегия 2026–2027 · По методике Михаила Гребенюка «Пять единичек»</div>
+    </div>
+  </div>
+
+  <div class="pfoot"><span>CrazyDrift · Стратегия «Пять единичек» · 2026–2027</span><span>Конфиденциально</span></div>
+</div>
+
+</body>
+</html>

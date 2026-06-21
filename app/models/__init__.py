@@ -493,3 +493,5 @@ class KnowledgeRecommendation(Base):
     is_applied: Mapped[bool] = mapped_column(Boolean, default=False)
     applied_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+from app.models.bot2_models import AKUser, AKSignal, AKMessage  # noqa

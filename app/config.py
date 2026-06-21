@@ -40,6 +40,11 @@ class Settings(BaseSettings):
     materials_manager_url: str = "https://t.me/crazydrift_manager"
     manager_chat_id: int = 0  # Telegram ID менеджера для уведомлений
 
+    # Антикризисный советник (bot2)
+    ak_bot_token: str = ""
+    ak_webhook_url: str = ""
+    ak_webhook_secret: str = "ak_secret_change_me"
+
     class Config:
         extra = "ignore"
         env_file = ".env"
